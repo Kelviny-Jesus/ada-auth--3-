@@ -6,8 +6,8 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Inventu",
-  description: "Login and register for Inventu platform",
+  title: "Ada",
+  description: "Login and register for Ada platform",
   icons: {
     icon: [
       {
