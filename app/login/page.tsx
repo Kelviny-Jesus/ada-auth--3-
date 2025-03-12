@@ -1,8 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { Eye, EyeOff, LogIn } from "lucide-react"
 import { useFormStatus } from "react-dom"
 import { useActionState } from "react"
@@ -31,18 +31,9 @@ function SubmitButton() {
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [state, formAction] = useActionState(loginUser, null)
-  const router = useRouter()
   const searchParams = useSearchParams()
   const showSuccessMessage = searchParams.get("registered") === "true"
   const [isResetModalOpen, setIsResetModalOpen] = useState(false)
-
-  useEffect(() => {
-    if (state?.success) {
-      // Store user data in localStorage (excluding sensitive information)
-      localStorage.setItem("userData", JSON.stringify(state.user))
-      router.push("/dashboard") // Redirect to dashboard instead of user page
-    }
-  }, [state?.success, router, state?.user])
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0a0a0c] bg-gradient-to-br from-[#0a0a0c] via-[#0d1117] to-[#131c2e] relative">
@@ -76,7 +67,7 @@ export default function LoginPage() {
                 Account created successfully! Please log in.
               </div>
             )}
-            {state?.error && !state?.success && (
+            {state?.error && (
               <div className="bg-red-500 text-white p-3 rounded-md mb-4">{state.error}</div>
             )}
             <form action={formAction} className="space-y-6">
@@ -145,7 +136,7 @@ export default function LoginPage() {
 
       <footer className="py-4 relative">
         <div className="container mx-auto text-center text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} Ada. All rights reserved.
+          © {new Date().getFullYear()} Ada. All rights reserved.
         </div>
       </footer>
       <ResetPasswordModal isOpen={isResetModalOpen} onClose={() => setIsResetModalOpen(false)} />
