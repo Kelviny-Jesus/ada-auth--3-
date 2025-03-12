@@ -9,7 +9,6 @@ export default function Home() {
   useEffect(() => {
     const userData = localStorage.getItem("userData")
     if (userData) {
-      router.push("/dashboard")
     } else {
       router.push("/login")
     }
