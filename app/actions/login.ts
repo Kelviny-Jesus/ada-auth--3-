@@ -40,18 +40,14 @@ export async function loginUser(prevState: any, formData: FormData) {
       return { error: "Error to proceed to login" }
     }
 
-    // Call the API route to set the cookie
-    const setCookieResponse = await fetch("/api/set-cookie", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ session_token: userData.session_token }),
-    });
-
-    if (!setCookieResponse.ok) {
-      return { error: "Error setting session cookie" }
-    }
+    // Set the session token as a cookie
+    cookies().set("authToken", userData.session_token, {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+      maxAge: 1296000,
+      sameSite: "lax",
+    })
 
     // Return the user data (excluding sensitive information)
     return {
