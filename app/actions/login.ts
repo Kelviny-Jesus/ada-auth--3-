@@ -30,7 +30,7 @@ export async function loginUser(prevState: any, formData: FormData) {
     })
 
     if (!response.ok) {
-      return { error: "Error to proceed to login" }
+      return { error: "Invalid Credentials" }
     }
 
     const userData: UserResponse = await response.json()
